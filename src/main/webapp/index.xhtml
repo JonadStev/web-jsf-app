@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Formulario de Registro</title>
+</h:head>
+
+<h:body>
+    <h1>FORMULARIO DE DATOS BASICOS</h1>
+    <h:form id="registroForm">
+        <p:panelGrid columns="2" style="margin-bottom:10px;">
+            <p:outputLabel for="id" value="Id:" />
+            <p:inputText id="id" value="#{registroBean.id}" disabled="true"/>
+
+            <p:outputLabel for="nombre" value="Nombre:" />
+            <p:inputText id="nombre" value="#{registroBean.nombre}"/>
+
+            <p:outputLabel for="apellidos" value="Apellidos:" />
+            <p:inputText id="apellidos" value="#{registroBean.apellidos}"/>
+
+            <p:outputLabel for="identificacion" value="Identificación:" />
+            <p:inputText id="identificacion" value="#{registroBean.identificacion}"/>
+
+            <p:outputLabel for="correo" value="Correo:" />
+            <p:inputText id="correo" value="#{registroBean.correo}"/>
+
+            <p:outputLabel for="direccion" value="Dirección:" />
+            <p:inputText id="direccion" value="#{registroBean.direccion}"/>
+        </p:panelGrid>
+
+        <!-- Botón para crear el registro -->
+        <p:commandButton value="Crear Registro" action="#{registroBean.crearRegistro}" update="registroForm registrosTableForm:registrosTable" rendered="#{empty registroBean.id}"/>
+        <!-- Botón para actualizar el registro seleccionado -->
+        <p:commandButton value="Actualizar Registro" action="#{registroBean.crearRegistro}" update="registroForm registrosTableForm:registrosTable" rendered="#{not empty registroBean.id}" />
+
+    </h:form>
+
+    <!-- Tabla para mostrar los registros -->
+    <h:form id="registrosTableForm">
+        <p:dataTable id="registrosTable" var="registro" value="#{registroBean.registros}" rowKey="#{registro.id}">
+            <p:column headerText="Id">
+                <h:outputText value="#{registro.id}" />
+            </p:column>
+            <p:column headerText="Nombre">
+                <h:outputText value="#{registro.nombre}" />
+            </p:column>
+            <p:column headerText="Apellidos">
+                <h:outputText value="#{registro.apellidos}" />
+            </p:column>
+            <p:column headerText="Identificación">
+                <h:outputText value="#{registro.identificacion}" />
+            </p:column>
+            <p:column headerText="Correo">
+                <h:outputText value="#{registro.correo}" />
+            </p:column>
+            <p:column headerText="Dirección">
+                <h:outputText value="#{registro.direccion}" />
+            </p:column>
+            <p:column>
+                <p:commandButton value="Seleccionar" actionListener="#{registroBean.seleccionarRegistro(registro)}" update="registroForm" />
+            </p:column>
+            <p:column>
+                <p:commandButton value="Eliminar" actionListener="#{registroBean.eliminarRegistro(registro)}" update="registrosTableForm:registrosTable" />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+</h:body>
+
+</html>
